@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - .:/var/www
+        depends_on:
+            - redis
+        networks:
+            - app-network
+
+    web:
+        image: nginx:alpine
+        ports:
+            - "81:80"
+        volumes:
+            - ./nginx.conf:/etc/nginx/conf.d/default.conf
+            - .:/var/www
+        networks:
+            - app-network
+
+    redis:
+        image: redis:alpine
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge

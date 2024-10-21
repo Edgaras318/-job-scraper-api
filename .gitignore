@@ -1,0 +1,4 @@
+/vendor/*
+/job-scraper/*
+/.idea/*
+/.env
